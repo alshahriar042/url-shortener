@@ -31,7 +31,7 @@ class UrlsController extends Controller
     public function store(Request $request)
     {
         try {
-            DB::transaction(function() use($request){
+
         $unqiue_string = Str::random(6);
         // $unique_check = Urls::where('shortened_url', '$unqiue_string')->first();
         $data['orginal_url'] = $request->orginal_url;
@@ -44,23 +44,6 @@ class UrlsController extends Controller
 
         }
         $urls= Urls::create($data);
-
-        // //  $ip=$request->ip(); //For live
-        // $ip = '103.239.147.187'; // Use for localhost
-        // $currentUserInfo = Location::get($ip);
-
-        // $visit['url_id'] = $urls->id;
-        // $visit['visitor_ip'] = $currentUserInfo->ip;
-        // $visit['visitor_location'] = $currentUserInfo->cityName;
-        // $visit['visitor_long'] = $currentUserInfo->longitude;
-        // $visit['visitor_lat'] = $currentUserInfo->latitude;
-        // $visit['visitor_device'] = Agent::device();
-        // $visit['visitor_os'] =  Agent::platform();
-        // // $visit['previous_platform'] = $currentUserInfo->cityName;
-        // $visit['last_visit_time'] = Carbon::now();
-        // Visits::create($visit);
-
-        });
     } catch (\Throwable $th) {
         Log::error($th->getMessage());
         return back()->with('warning', ' Updated Failed.');
@@ -93,8 +76,6 @@ if($ipexists == null){
 {
     $visitor_count= $ipexists->visit_count;
     $visitor_count = $visitor_count+1;
-    // dd($visitor_count);
-
     Visits::where('id',$ipexists->id)
     ->update([
         'visit_count' => $visitor_count
