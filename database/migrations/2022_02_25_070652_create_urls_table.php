@@ -14,10 +14,11 @@ class CreateUrlsTable extends Migration
     public function up()
     {
         Schema::create('urls', function (Blueprint $table) {
+            $table->id();
             $table->bigInteger('user_id');
-            $table->longtext('orignal_url');
+            $table->longtext('orginal_url');
             $table->longtext('shortened_url');
-            $table->string('expiration_duration');
+            $table->string('expiration_duration')->nullable();
             $table->timestamps();
         });
     }

@@ -10,9 +10,11 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "hnhdigital-os/laravel-number-converter": "^1.4",
+        "jenssegers/agent": "^2.6",
         "laravel/framework": "^8.65",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "stevebauman/location": "^6.3",
         "tightenco/ziggy": "^1.4"
     },
     "require-dev": {
