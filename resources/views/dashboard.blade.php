@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Dashboard | Top Gear Auto Service BD Ltd')
+@section('title', 'Url Shortener')
 
 @section('content')
 
@@ -30,12 +30,13 @@
     <div class="card-body">
 
         <div class="table-responsive">
-            <table class="table table-striped table-hover"  style="width:100%;">
+            <table class="table table-striped table-hover" id="quiztable"  style="width:100%;">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Shortened Url</th>
                         <th>Orginal Url</th>
+                        <th>QR Code</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,8 +49,13 @@
                         </td>
                         <td>
 
-                            {{ $url->orginal_url }}</td>
-
+                            {{ $url->orginal_url }}
+                        </td>
+                    <td>
+                        <div class="card-body">
+                            {!! QrCode::size(100)->generate(route('url.show',$url->shortened_url)) !!}
+                        </div>
+                    </td>
                     </tr>
                     @endforeach
 
@@ -61,4 +67,18 @@
 
 
 
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $('#quiztable').DataTable({
+                dom: "Blfrtip",
+                columnDefs: [{
+                    orderable: false,
+                    targets: -1
+                }]
+            });
+        });
+</script>
 @endsection

@@ -25,6 +25,10 @@
     <link rel="stylesheet" href="{{ asset('assets/bundles/bootstrap-daterangepicker/daterangepicker.css') }}">
     <link rel="stylesheet"
         href="{{ asset('assets/bundles/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}">
+    <!-- datatables -->
+    {{-- <link rel="stylesheet" href="{{ asset('assets/bundles/datatables/datatables.min.css') }}"> --}}
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"> --}}
+    {{-- <link rel="stylesheet" href="{{ asset('assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}"> --}}
 
     {{-- DataTable New --}}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.11.3/af-2.3.7/b-2.1.1/b-colvis-2.1.1/b-html5-2.1.1/b-print-2.1.1/cr-1.5.5/date-1.1.1/fc-4.0.1/fh-3.2.1/kt-2.6.4/r-2.2.9/rg-1.1.4/rr-1.2.8/sc-2.0.5/sb-1.3.0/sp-1.4.0/sl-1.3.4/sr-1.0.1/datatables.min.css"/>
@@ -34,7 +38,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 
-    <link rel='shortcut icon' type='image/x-icon' href="{{ asset('assets/img/favicon.ico') }}" />
+    {{-- <link rel='shortcut icon' type='image/x-icon' href="{{ asset('assets/img/favicon.ico') }}" /> --}}
     <!-- toaster -->
     <link rel="stylesheet" href="{{ asset('assets/bundles/izitoast/css/iziToast.min.css') }}">
     @yield('css')
@@ -65,16 +69,37 @@
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
     <!-- Custom JS File -->
     <script src="{{ asset('assets/js/custom.js') }}"></script>
-
+    <!-- DataTables -->
+    {{-- <script src="{{ asset('assets/bundles/datatables/datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/bundles/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/bundles/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('assets/bundles/datatables/export-tables/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/bundles/datatables/export-tables/buttons.flash.min.js') }}"></script>
+    <script src="{{ asset('assets/bundles/datatables/export-tables/jszip.min.js') }}"></script>
+    <script src="{{ asset('assets/bundles/datatables/export-tables/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/bundles/datatables/export-tables/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('assets/bundles/datatables/export-tables/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/js/page/datatables.js') }}"></script> --}}
 
     {{-- DataTable New --}}
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    {{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
     <script type="text/javascript"
         src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.11.3/af-2.3.7/b-2.1.1/b-colvis-2.1.1/b-html5-2.1.1/b-print-2.1.1/cr-1.5.5/date-1.1.1/fc-4.0.1/fh-3.2.1/kt-2.6.4/r-2.2.9/rg-1.1.4/rr-1.2.8/sc-2.0.5/sb-1.3.0/sp-1.4.0/sl-1.3.4/sr-1.0.1/datatables.min.js">
-    </script>
+    </script> --}}
 
+    {{-- DataTable For Export --}}
+ <!-- DataTable -->
+        <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js" type="text/javascript"></script>
+        <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js" type="text/javascript"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.flash.min.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js" type="text/javascript"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js" type="text/javascript"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js" type="text/javascript"></script>
 
     <!-- DateTimePicker -->
     <script src="{{ asset('assets/bundles/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}"></script>
@@ -92,16 +117,20 @@
     {{-- session toaster config page --}}
     <script src="{{ asset('assets/js/page/toastr.js') }}"></script>
 
-
+    <script type="text/javascript" src="{{ asset('assets/js/sweetalert2@11.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/customSweetalert2.js') }}"></script>
+    {{-- print --}}
+    {{-- <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script> --}}
 
     <script>
-        $(document).ready( function () {
-         $('#tableExport').DataTable();
-     } );
+    //     $(document).ready( function () {
+    //      $('#tableExport').DataTable();
+    //  } );
 
      $(document).ready( function () {
          $('#tableExport1').DataTable();
      } );
+
      </script>
     <script>
 
@@ -134,6 +163,7 @@
             });
         @endif
     </script>
+
 
     @yield('js')
 </body>

@@ -34,7 +34,6 @@ class UrlsController extends Controller
 
     public function store(Request $request)
     {
-
         try {
             DB::transaction(function() use($request){
         $unqiue_string = Str::random(6);

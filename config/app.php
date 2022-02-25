@@ -164,6 +164,8 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Stevebauman\Location\LocationServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+
 
 
 
@@ -238,6 +240,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Location' => 'Stevebauman\Location\Facades\Location',
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+
 
 
 
