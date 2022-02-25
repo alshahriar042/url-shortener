@@ -16,9 +16,9 @@
             {{-- jobs --}}
             <li class="dropdown">
                 <a href="#" class="menu-toggle nav-link has-dropdown">
-                    <i data-feather="sliders"></i><span>Jobs</span></a>
+                    <i data-feather="sliders"></i><span>Reports</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="#">Create Job Card</a></li>
+                    <li><a class="nav-link" href="#">Report</a></li>
 
                 </ul>
             </li>

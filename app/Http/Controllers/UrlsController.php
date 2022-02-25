@@ -23,12 +23,8 @@ class UrlsController extends Controller
 {
     public function index()
     {
-        $auth_id = Auth::user()->id;
-        //  dd($auth_id);
-        $urls =  Urls::OrderBy('id', 'desc')->get();
-        //    $urls=  Urls::OrderBy('id','desc')->where('user_id','=', '$auth_id') ->get();
+       $urls=  Urls::where('user_id', Auth::id())->get();
 
-        //  dd($urls);
         return view('dashboard', compact('urls'));
     }
 
@@ -49,21 +45,20 @@ class UrlsController extends Controller
         }
         $urls= Urls::create($data);
 
-        //  $ip=$request->ip(); //For live
-        $ip = '103.239.147.187'; // Use for localhost
-        $currentUserInfo = Location::get($ip);
+        // //  $ip=$request->ip(); //For live
+        // $ip = '103.239.147.187'; // Use for localhost
+        // $currentUserInfo = Location::get($ip);
 
-        $visit['url_id'] = $urls->id;
-        $visit['visitor_ip'] = $currentUserInfo->ip;
-        $visit['visitor_location'] = $currentUserInfo->cityName;
-        $visit['visitor_long'] = $currentUserInfo->longitude;
-        $visit['visitor_lat'] = $currentUserInfo->latitude;
-        $visit['visitor_device'] = Agent::device();
-        $visit['visitor_os'] =  Agent::platform();
-        // $visit['previous_platform'] = $currentUserInfo->cityName;
-        $visit['last_visit_time'] = Carbon::now();
-
-         Visits::create($visit);
+        // $visit['url_id'] = $urls->id;
+        // $visit['visitor_ip'] = $currentUserInfo->ip;
+        // $visit['visitor_location'] = $currentUserInfo->cityName;
+        // $visit['visitor_long'] = $currentUserInfo->longitude;
+        // $visit['visitor_lat'] = $currentUserInfo->latitude;
+        // $visit['visitor_device'] = Agent::device();
+        // $visit['visitor_os'] =  Agent::platform();
+        // // $visit['previous_platform'] = $currentUserInfo->cityName;
+        // $visit['last_visit_time'] = Carbon::now();
+        // Visits::create($visit);
 
         });
     } catch (\Throwable $th) {
@@ -74,13 +69,53 @@ class UrlsController extends Controller
     return back()->with('success', 'Shortened Url Successfully Created.');
     }
 
-    public function show($code)
+     public function insertinfo($id){
+            // $ip=$request->ip(); //For live
+     $ip = '103.239.147.187'; // Use for localhost
+
+     $currentUserInfo = Location::get($ip);
+     $visit['url_id'] =$id;
+     $visit['visitor_ip'] = $currentUserInfo->ip;
+     $visit['visitor_location'] = $currentUserInfo->cityName;
+     $visit['visitor_long'] = $currentUserInfo->longitude;
+     $visit['visitor_lat'] = $currentUserInfo->latitude;
+     $visit['visitor_device'] = Agent::device();
+     $visit['visitor_os'] =  Agent::platform();
+     // $visit['previous_platform'] = $currentUserInfo->cityName;
+    $visit['last_visit_time'] = Carbon::now();
+
+
+$ipexists= Visits::select('*')->where('visitor_ip',$ip)->first();
+
+if($ipexists == null){
+    Visits::create($visit);
+}else
+{
+    $visitor_count= $ipexists->visit_count;
+    $visitor_count = $visitor_count+1;
+    // dd($visitor_count);
+
+    Visits::where('id',$ipexists->id)
+    ->update([
+        'visit_count' => $visitor_count
+    ]);
+}
+
+
+
+
+     }
+
+    public function show(Request $request, $code)
     {
         $current_time = Carbon::now();
         $find_url = Urls::where('shortened_url', $code)->first();
-        if(($find_url->expiration_duration) > $current_time ){
-            return redirect($find_url->orginal_url);
+
+       if($find_url->expiration_duration > $current_time ){
+        $this->insertinfo( $find_url->id);
+        return redirect($find_url->orginal_url);
          }elseif($find_url->expiration_duration==0){
+            $this->insertinfo( $find_url->id);
             return redirect($find_url->orginal_url);
          }
         else{
