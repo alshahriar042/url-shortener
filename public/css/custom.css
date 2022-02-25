@@ -1,0 +1,66 @@
+form{
+    margin-bottom: 0px;
+}
+.custom-switch {
+   padding-left: 0rem; 
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.modal-header {
+    border-bottom: 1px solid #e3e3e3;
+    padding: 15px 25px;
+}
+
+.modal-body {
+   /*padding-top: 15px; */
+   padding: 0px 25px 25px 25px;
+}
+
+.toggled {
+  display: none;
+}
+
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #444;
+    line-height: 42px;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    display: block;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    right: 10px;
+}
+
+.modal .select2-container {
+    width: 100%!important;
+}
+
+.card {
+    margin-bottom: 10px;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+label .badge{
+    padding: 2px 15px;
+    font-size: 20px;
+    line-height: 13px;
+    display: inline-block;
+    float: right;
+    border-radius: 4px;
+}
+
+.table:not(.table-sm):not(.table-md):not(.dataTable) td,
+.table:not(.table-sm):not(.table-md):not(.dataTable) th {
+    height: 50px!important;
+}

@@ -1,0 +1,83 @@
+th {
+    text-align: center;
+}
+
+table tr td{
+	text-align: center;
+}
+
+.table thead th,
+.table tbody td,
+.table tfoot th{
+  vertical-align: middle!important;
+}
+
+.table-bordered>thead>tr>th,
+.table-bordered>tbody>tr>th,
+.table-bordered>tfoot>tr>th,
+.table-bordered>thead>tr>td,
+.table-bordered>tbody>tr>td,
+.table-bordered>tfoot>tr>td {
+    border: 1px solid #000000!important;
+}
+
+.table-bordered>tfoot>tr>th{
+    border: 1px solid transparent!important;
+    padding: 2px;
+    width: 60px;
+}
+
+.table-bordered>tfoot>tr>td{
+    border: 1px solid transparent!important;
+    padding: 1px;
+}
+
+#delivery_memo{
+  /*height:1000px;*/
+  background-color: #f1f1f1;
+  /*margin: 10px auto;*/
+  padding: 15px;
+}
+.memo_title {
+  background-color: #000 !important;
+  padding: 4px 50px;
+  display: inline-block;
+  clip-path: polygon(0 0, 0 0, 5% 51%, 0 100%, 0 100%, 55% 100%, 100% 100%, 100% 100%, 95% 52%, 100% 0, 100% 0, 45% 0);
+}
+.memo_title h4 {
+  color: #ffffff !important;
+  display: inline-block;
+  margin: 0px;
+}
+
+
+.comp_name{
+  color: #2d2d2d !important;
+}
+.comp_name h1{
+  padding: 7px 25px;
+  /*clip-path: polygon(0 0, 0 0, 3% 51%, 0 100%, 0 100%, 55% 100%, 100% 100%, 100% 100%, 97% 52%, 100% 0, 100% 0, 45% 0);*/
+  /*background-color: #2d2d2d;*/
+  /*display: inline-block;*/
+  margin: 0px;
+}
+
+.container_slip{
+	width: 700px;
+	margin: 0px auto;
+}
+
+strong{
+  font-size: 16px;
+}
+
+.invoice{
+    width: 100%;
+    margin: auto;
+}
+
+.bg-black{
+    background-color: #000 !important;
+    color: #fff!important;
+}
+
