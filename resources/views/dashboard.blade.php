@@ -22,8 +22,8 @@
               <input type="datetime-local" class="form-control"  name="expire_dateTime" >
             </div>
             <div class="form-group">
-                <label for="ExpireDate">IP Block(In Minute) </label>
-                <input type="number" class="form-control" placeholder="Enter Minutes"  name="block_number" >
+                <label for="ExpireDate">IP Block(Hit Url In Minute) </label>
+                <input type="number" class="form-control" placeholder="Enter Number"  name="block_number" required >
               </div>
 
 

@@ -24,9 +24,9 @@ class UrlController extends Controller
     {
 
         do {
-            $code =Str::random(6);
+            $code = Str::random(6);
         } while (Url::where("shortened_url", "=", $code)->first());
-            return $code;
+        return $code;
     }
 
 
@@ -37,7 +37,7 @@ class UrlController extends Controller
             $data['orginal_url']     = $request->orginal_url;
             $data['shortened_url']   = $this->generateUniqueCode();
             $data['user_id']         = Auth::id();
-            $data['ip_block_number'] = $request->block_number;
+            $data['ip_hit_number'] = $request->block_number;
 
             if ($request->expire_dateTime) {
                 $data['expiration_duration'] = date("Y-m-d H:i:s", strtotime($request->expire_dateTime));
@@ -81,27 +81,33 @@ class UrlController extends Controller
         }
     }
 
+    public function ipBlockCheck($find_url)
+    {
+        $visit        = Visit::where('url_id', $find_url->id)->first();
+        $date         = Carbon::parse($visit->last_visit_time);
+        $now          = Carbon::now();
+        $diff         = $date->diffInMinutes($now);
+
+        if (($diff >= 1) && ($find_url->ip_hit_number < $visit->visit_count)) {
+            dd("ip block");
+        } else {
+           return $find_url->orginal_url;
+        }
+    }
+
     public function show(Request $request, $code)
     {
         $current_time = Carbon::now();
         $find_url     = Url::where('shortened_url', $code)->first();
-        $visit        = Visit::where('url_id', $find_url->id)->first();
-        // $date         = Carbon::parse($visit->last_visit_time);
-        // $now          = Carbon::now();
-        // $diff         = $date->diffInMinutes($now);
-
-        // if (($diff >= 1) && ($find_url->ip_block_number < $visit->visit_count)) {
-        //     dd("expirex");
-        // }else{
-        //     dd('ok');
-        // }
 
         if ($find_url->expiration_duration > $current_time) {
             $this->insertinfo($find_url->id);
-            return redirect($find_url->orginal_url);
+            $url = $this->ipBlockCheck($find_url);
+            return redirect($url);
         } elseif ($find_url->expiration_duration == 0) {
             $this->insertinfo($find_url->id);
-            return redirect($find_url->orginal_url);
+            $url = $this->ipBlockCheck($find_url);
+            return redirect($url);
         } else {
             return view("404");
         }
