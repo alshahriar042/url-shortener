@@ -2,7 +2,7 @@
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
             <a href="{{ route('dashboard') }}">
-                <img alt="image" src="{{ asset('assets/img/logo.png') }}" class="header-logo mt-2" />
+                {{-- <img alt="image" src="{{ asset('assets/img/logo.png') }}" class="header-logo mt-2" /> --}}
             </a>
         </div>
         <ul class="sidebar-menu">

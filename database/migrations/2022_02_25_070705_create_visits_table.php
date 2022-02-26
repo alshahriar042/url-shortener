@@ -24,7 +24,7 @@ class CreateVisitsTable extends Migration
             $table->string('visitor_os');
             $table->string('previous_platform');
             $table->string('last_visit_time');
-            $table->integer('visit_count');
+            $table->integer('visit_count')->default(1);
             $table->timestamps();
         });
     }

@@ -20,6 +20,11 @@
               <label for="ExpireDate">Expire</label>
               <input type="datetime-local" class="form-control"  name="expire_dateTime" >
             </div>
+            <div class="form-group">
+                <label for="ExpireDate">IP Block(In Minute) </label>
+                <input type="number" class="form-control"  name="block_number" >
+              </div>
+
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -35,7 +40,7 @@
                     <tr>
                         <th>#</th>
                         <th>Shortened Url</th>
-                        <th>Orginal Url</th>
+                        <th style="width: 200px !important" >Orginal Url</th>
                         <th>QR Code</th>
                     </tr>
                 </thead>
@@ -47,8 +52,7 @@
                         <td>
                             <a href="{{ route('url.show',$url->shortened_url) }}" target="_blank">{{ route('url.show',$url->shortened_url) }}</a>
                         </td>
-                        <td>
-
+                        <td >
                             {{ $url->orginal_url }}
                         </td>
                     <td>

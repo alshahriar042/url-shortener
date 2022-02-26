@@ -161,7 +161,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Barryvdh\DomPDF\ServiceProvider::class,
         Stevebauman\Location\LocationServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,

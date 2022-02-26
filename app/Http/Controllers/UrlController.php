@@ -16,11 +16,7 @@ class UrlController extends Controller
 {
     public function index()
     {
-        // $d= Url::with('user')->get();
-        // dd($d);
-
         $urls =  Url::where('user_id', Auth::id())->orderBy('id', 'desc')->get();
-
         return view('dashboard', compact('urls'));
     }
 
@@ -33,6 +29,7 @@ class UrlController extends Controller
             $data['orginal_url'] = $request->orginal_url;
             $data['shortened_url'] = $unqiue_string;
             $data['user_id'] = Auth::id();
+            $data['ip_block_number'] = $request->block_number;
             if ($request->expire_dateTime) {
                 $data['expiration_duration'] = date("Y-m-d H:i:s", strtotime($request->expire_dateTime));
             } else {
@@ -62,12 +59,12 @@ class UrlController extends Controller
         $visit['visitor_device'] = Agent::device();
         $visit['visitor_os'] =  Agent::platform();
         // $visit['previous_platform'] = $currentUserInfo->cityName;
-        $visit['visit_count'] = 1;
+        // $visit['visit_count'] = 1;
 
         $visit['last_visit_time'] = Carbon::now();
 
         $ipexists = Visit::select('*')->where('visitor_ip', $ip)->first();
-        dd($visit['visit_count']);
+        // dd($visit['visit_count']);
 
         if ($ipexists == null) {
             Visit::create($visit);
@@ -85,6 +82,22 @@ class UrlController extends Controller
     {
         $current_time = Carbon::now();
         $find_url = Url::where('shortened_url', $code)->first();
+        // $find_url->ip_block_number;
+
+
+        $visit = Visit::where('url_id', $find_url->id)->first();
+        // $visit->visit_count;
+
+        $date = Carbon::parse($visit->last_visit_time);
+        $now  = Carbon::now();
+        $diff = $date->diffInMinutes($now);
+
+
+        if (($diff >= 1) && ($find_url->ip_block_number < $visit->visit_count)) {
+            dd("expirex");
+        }else{
+            dd('ok');
+        }
 
         if ($find_url->expiration_duration > $current_time) {
             $this->insertinfo($find_url->id);
