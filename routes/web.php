@@ -20,10 +20,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/',[UrlController::class, 'index'])->name('dashboard');
     Route::get('/report',[ReportController::class,'index'])->name('report.index');
     Route::post('/short-url-create',[UrlController::class, 'store'])->name('url.store');
+    });
+
     Route::get('/{code}',[UrlController::class, 'show'])->name('url.show');
-
-
-
-
-
-});

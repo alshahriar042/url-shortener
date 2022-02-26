@@ -53,13 +53,14 @@ class UrlController extends Controller
     }
 
 
-    public function insertinfo($id)
+    public function insertinfo($find_url)
     {
         // $ip=$request->ip(); //For live
         // $visit['previous_platform'] =
+        // dd($find_url);
         $ip                        = '103.239.147.190'; // Use for localhost
         $currentUserInfo           = Location::get($ip);
-        $visit['url_id']           = $id;
+        $visit['url_id']           = $find_url->id;
         $visit['visitor_ip']       = $currentUserInfo->ip;
         $visit['visitor_location'] = $currentUserInfo->cityName;
         $visit['visitor_long']     = $currentUserInfo->longitude;
@@ -68,16 +69,43 @@ class UrlController extends Controller
         $visit['visitor_os']       = Agent::platform();
         $visit['last_visit_time']  = Carbon::now();
 
-        $ipexists = Visit::select('*')->where('visitor_ip', $ip)->first();
+        $ipexists = Visit::where('visitor_ip', $ip)
+            ->where('url_id', $find_url->id)
+            ->first();
+        // dd($ipexists);
         if ($ipexists == null) {
             Visit::create($visit);
         } else {
             $visitor_count = $ipexists->visit_count;
             $visitor_count = $visitor_count + 1;
-            Visit::where('id', $ipexists->id)
+            $visit        = Visit::where('url_id', $find_url->id)->first();
+            $date         = Carbon::parse($visit->last_visit_time);
+            $now          = Carbon::now();
+            $diff         = $date->diffInSeconds($now);
+            //  Log::error($diff);
+
+            if (($diff <= 60) && ($find_url->ip_hit_number <= $visit->visit_count)) {
+                Visit::where('id', $ipexists->id)
                 ->update([
+                    'last_visit_time'  => Carbon::now(),
                     'visit_count' => $visitor_count
                 ]);
+
+            } elseif ($diff > 300) {
+                $visitor_count = 0;
+                Visit::where('id', $ipexists->id)
+                    ->update([
+                        'last_visit_time'  => Carbon::now(),
+                        'visit_count' => $visitor_count
+                    ]);
+            }
+             elseif($find_url->ip_hit_number > $visit->visit_count) {
+                Visit::where('id', $ipexists->id)
+                    ->update([
+                        'last_visit_time'  => Carbon::now(),
+                        'visit_count' => $visitor_count
+                    ]);
+            }
         }
     }
 
@@ -88,10 +116,10 @@ class UrlController extends Controller
         $now          = Carbon::now();
         $diff         = $date->diffInMinutes($now);
 
-        if (($diff >= 1) && ($find_url->ip_hit_number < $visit->visit_count)) {
-            dd("ip block");
+        if (($diff <= 1) && ($find_url->ip_hit_number < $visit->visit_count)) {
+            dd("Your Ip has Been Block for % minutes");
         } else {
-           return $find_url->orginal_url;
+            return $find_url->orginal_url;
         }
     }
 
@@ -101,11 +129,12 @@ class UrlController extends Controller
         $find_url     = Url::where('shortened_url', $code)->first();
 
         if ($find_url->expiration_duration > $current_time) {
-            $this->insertinfo($find_url->id);
+            // dd(1);
+            $this->insertinfo($find_url);
             $url = $this->ipBlockCheck($find_url);
             return redirect($url);
         } elseif ($find_url->expiration_duration == 0) {
-            $this->insertinfo($find_url->id);
+            $this->insertinfo($find_url);
             $url = $this->ipBlockCheck($find_url);
             return redirect($url);
         } else {
