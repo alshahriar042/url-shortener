@@ -82,17 +82,17 @@ class UrlController extends Controller
             $date         = Carbon::parse($visit->last_visit_time);
             $now          = Carbon::now();
             $diff         = $date->diffInSeconds($now);
-            //  Log::error($diff);
+             Log::error($diff);
 
-            if (($diff <= 60) && ($find_url->ip_hit_number <= $visit->visit_count)) {
+            if (($diff <= 60) && ($find_url->ip_hit_number >= $visit->visit_count)) {
                 Visit::where('id', $ipexists->id)
                 ->update([
                     'last_visit_time'  => Carbon::now(),
                     'visit_count' => $visitor_count
                 ]);
 
-            } elseif ($diff > 300) {
-                $visitor_count = 0;
+            } elseif ($diff > 60) {
+                $visitor_count = 1;
                 Visit::where('id', $ipexists->id)
                     ->update([
                         'last_visit_time'  => Carbon::now(),
@@ -102,7 +102,6 @@ class UrlController extends Controller
              elseif($find_url->ip_hit_number > $visit->visit_count) {
                 Visit::where('id', $ipexists->id)
                     ->update([
-                        'last_visit_time'  => Carbon::now(),
                         'visit_count' => $visitor_count
                     ]);
             }
@@ -117,7 +116,7 @@ class UrlController extends Controller
         $diff         = $date->diffInMinutes($now);
 
         if (($diff <= 1) && ($find_url->ip_hit_number < $visit->visit_count)) {
-            dd("Your Ip has Been Block for % minutes");
+            dd("Your Ip has Been Block for 5 minutes");
         } else {
             return $find_url->orginal_url;
         }
