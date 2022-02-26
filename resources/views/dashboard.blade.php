@@ -2,6 +2,7 @@
 
 @section('title', 'Url Shortener')
 
+
 @section('content')
 
 
@@ -22,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label for="ExpireDate">IP Block(In Minute) </label>
-                <input type="number" class="form-control"  name="block_number" >
+                <input type="number" class="form-control" placeholder="Enter Minutes"  name="block_number" >
               </div>
 
 
@@ -32,41 +33,42 @@
         </div>
     </div>
 
-    <div class="card-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover" id="quiztable">
+                    <thead>
+                        <tr>
+                            <th class="text-center">#SL</th>
+                            <th class="text-center">QR Code</th>
+                            <th class="text-center">Shortened Url</th>
+                            <th>Orginal Url</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($urls as $url )
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>
+                                <div class="card-body">
+                                    {!! QrCode::size(100)->generate(route('url.show',$url->shortened_url)) !!}
+                                </div>
+                            </td>
+                            <td>
+                                <a href="{{ route('url.show',$url->shortened_url) }}" target="_blank">{{ route('url.show',$url->shortened_url) }}</a>
+                            </td>
+                            <td >
+                                {{ $url->orginal_url }}
+                            </td>
+                        </tr>
+                        @endforeach
 
-        <div class="table-responsive">
-            <table class="table table-striped table-hover" id="quiztable"  style="width:100%;">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Shortened Url</th>
-                        <th style="width: 200px !important" >Orginal Url</th>
-                        <th>QR Code</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($urls as $url )
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-
-                        <td>
-                            <a href="{{ route('url.show',$url->shortened_url) }}" target="_blank">{{ route('url.show',$url->shortened_url) }}</a>
-                        </td>
-                        <td >
-                            {{ $url->orginal_url }}
-                        </td>
-                    <td>
-                        <div class="card-body">
-                            {!! QrCode::size(100)->generate(route('url.show',$url->shortened_url)) !!}
-                        </div>
-                    </td>
-                    </tr>
-                    @endforeach
-
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
 
 
 

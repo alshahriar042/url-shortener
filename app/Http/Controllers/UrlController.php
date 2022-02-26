@@ -86,15 +86,15 @@ class UrlController extends Controller
         $current_time = Carbon::now();
         $find_url     = Url::where('shortened_url', $code)->first();
         $visit        = Visit::where('url_id', $find_url->id)->first();
-        $date         = Carbon::parse($visit->last_visit_time);
-        $now          = Carbon::now();
-        $diff         = $date->diffInMinutes($now);
+        // $date         = Carbon::parse($visit->last_visit_time);
+        // $now          = Carbon::now();
+        // $diff         = $date->diffInMinutes($now);
 
-        if (($diff >= 1) && ($find_url->ip_block_number < $visit->visit_count)) {
-            dd("expirex");
-        }else{
-            dd('ok');
-        }
+        // if (($diff >= 1) && ($find_url->ip_block_number < $visit->visit_count)) {
+        //     dd("expirex");
+        // }else{
+        //     dd('ok');
+        // }
 
         if ($find_url->expiration_duration > $current_time) {
             $this->insertinfo($find_url->id);
