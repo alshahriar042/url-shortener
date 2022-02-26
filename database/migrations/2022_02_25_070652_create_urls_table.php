@@ -17,8 +17,8 @@ class CreateUrlsTable extends Migration
             $table->id();
             $table->bigInteger('user_id');
             $table->longtext('orginal_url');
-            $table->longtext('shortened_url');
-            $table->integer('ip_block_number');
+            $table->longtext('shortened_url')->unique();
+            $table->integer('ip_block_number')->nullable();
             $table->string('expiration_duration')->nullable();
             $table->timestamps();
         });
