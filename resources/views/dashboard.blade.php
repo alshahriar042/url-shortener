@@ -12,12 +12,12 @@
         <form action="{{ route('url.store') }}" method="POST">
             @csrf
             <div class="form-group">
-                <label for="exampleInputEmail1">Paste your Url</label>
+                <label for="URL">Paste your Url</label>
                 <input type="text" class="form-control" name="orginal_url" aria-describedby="emailHelp"
                     placeholder="Enter Url" required >
             </div>
             <div class="form-group">
-              <label for="exampleInputPassword1">Expire</label>
+              <label for="ExpireDate">Expire</label>
               <input type="datetime-local" class="form-control"  name="expire_dateTime" >
             </div>
 

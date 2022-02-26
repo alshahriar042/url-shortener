@@ -18,7 +18,7 @@
                 <a href="#" class="menu-toggle nav-link has-dropdown">
                     <i data-feather="sliders"></i><span>Reports</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="#">Report</a></li>
+                    <li><a class="nav-link" href="{{ route('report.index') }}">Report</a></li>
 
                 </ul>
             </li>

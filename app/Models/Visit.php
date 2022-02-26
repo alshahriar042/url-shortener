@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\URL;
 
-class Visits extends Model
+class Visit extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'url_id',
         'visitor_ip',
@@ -21,4 +21,7 @@ class Visits extends Model
         'last_visit_time',
     ];
 
+    public function url(){
+        return $this->belongsTo(Url::class);
+    }
 }

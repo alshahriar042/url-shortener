@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Urls extends Model
+class Url extends Model
 {
     use HasFactory;
 
@@ -15,4 +15,12 @@ class Urls extends Model
         'shortened_url',
         'expiration_duration',
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class,'user_id','id');
+    }
+
+    public function visits(){
+        return $this->hasMany(Visit::class,'url_id','id');
+    }
 }
