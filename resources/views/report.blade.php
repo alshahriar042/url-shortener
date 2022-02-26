@@ -20,10 +20,16 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $i=1;
+                    @endphp
                     @foreach ($reports as $report )
                     @foreach ($report->visits as $value )
                     <tr>
-                        <td>{{ $report->iteration }}</td>
+                        <td>{{ $i++ }}</td>
+                        <td>
+                            {{ $report->user->name  }}
+                       </td>
                         <td>
                             {{ $value->visitor_ip  }}
                        </td>

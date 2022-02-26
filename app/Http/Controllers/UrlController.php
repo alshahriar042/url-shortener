@@ -51,7 +51,7 @@ class UrlController extends Controller
     public function insertinfo($id)
     {
         // $ip=$request->ip(); //For live
-        $ip = '103.239.147.187'; // Use for localhost
+        $ip = '103.239.147.190'; // Use for localhost
 
         $currentUserInfo = Location::get($ip);
         $visit['url_id'] = $id;
@@ -62,9 +62,12 @@ class UrlController extends Controller
         $visit['visitor_device'] = Agent::device();
         $visit['visitor_os'] =  Agent::platform();
         // $visit['previous_platform'] = $currentUserInfo->cityName;
+        $visit['visit_count'] = 1;
+
         $visit['last_visit_time'] = Carbon::now();
 
         $ipexists = Visit::select('*')->where('visitor_ip', $ip)->first();
+        dd($visit['visit_count']);
 
         if ($ipexists == null) {
             Visit::create($visit);

@@ -9,7 +9,7 @@ class ReportController extends Controller
 {
     //
     public function index(){
-        $reports= Url::with(['visits'])->get();
+        $reports= Url::with(['user','visits'])->get();
         // dd($reports);
 
         return view('report',compact('reports'));
