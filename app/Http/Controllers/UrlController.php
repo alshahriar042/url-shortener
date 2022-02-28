@@ -80,7 +80,7 @@ class UrlController extends Controller
             $date         = Carbon::parse($visit->last_visit_time);
             $now          = Carbon::now();
             $diff         = $date->diffInSeconds($now);
-             Log::error($diff);
+            //  Log::error($diff);
 
             if (($diff <= 60) && ($find_url->ip_hit_number >= $visit->visit_count)) {
                 Visit::where('id', $ipexists->id)
