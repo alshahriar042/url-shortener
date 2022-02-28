@@ -14,4 +14,10 @@ class ReportController extends Controller
 
         return view('report',compact('reports'));
     }
+
+    public function error(){
+        // dd($reports);
+
+        return view('error-message');
+    }
 }

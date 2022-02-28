@@ -53,11 +53,10 @@ class UrlController extends Controller
     }
 
 
-    public function insertinfo($find_url)
+    public function insertinfo($request,$find_url)
     {
         // $ip=$request->ip(); //For live
-        // $visit['previous_platform'] =
-        // dd($find_url);
+        $previous_platform=$request->getSchemeAndHttpHost(); //For live
         $ip                        = '103.239.147.190'; // Use for localhost
         $currentUserInfo           = Location::get($ip);
         $visit['url_id']           = $find_url->id;
@@ -68,6 +67,9 @@ class UrlController extends Controller
         $visit['visitor_device']   = Agent::device();
         $visit['visitor_os']       = Agent::platform();
         $visit['last_visit_time']  = Carbon::now();
+        $visit['previous_platform'] =$previous_platform;
+
+        // dd($previous_platform);
 
         $ipexists = Visit::where('visitor_ip', $ip)
             ->where('url_id', $find_url->id)
@@ -116,7 +118,8 @@ class UrlController extends Controller
         $diff         = $date->diffInMinutes($now);
 
         if (($diff <= 1) && ($find_url->ip_hit_number < $visit->visit_count)) {
-            dd("Your Ip has Been Block for 5 minutes");
+            return '/error-message';
+
         } else {
             return $find_url->orginal_url;
         }
@@ -126,14 +129,12 @@ class UrlController extends Controller
     {
         $current_time = Carbon::now();
         $find_url     = Url::where('shortened_url', $code)->first();
-
         if ($find_url->expiration_duration > $current_time) {
-            // dd(1);
-            $this->insertinfo($find_url);
+            $this->insertinfo($request,$find_url);
             $url = $this->ipBlockCheck($find_url);
             return redirect($url);
         } elseif ($find_url->expiration_duration == 0) {
-            $this->insertinfo($find_url);
+            $this->insertinfo($request,$find_url);
             $url = $this->ipBlockCheck($find_url);
             return redirect($url);
         } else {

@@ -15,6 +15,7 @@ class Url extends Model
         'shortened_url',
         'expiration_duration',
         'ip_hit_number',
+        'previous_platform',
     ];
 
     public function user(){

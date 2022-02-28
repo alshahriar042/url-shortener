@@ -14,7 +14,7 @@
     </div>
     <ul class="navbar-nav navbar-right">
 
-        <div class="dropdown-title" style="margin-top: 5px;">{{ Auth::user()->name }}</div>
+        {{-- <div class="dropdown-title" style="margin-top: 5px;">{{ Auth::user()->name }}</div> --}}
         <li class="dropdown"><a href="#" data-toggle="dropdown"
                 class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image"
                     src="{{ !empty($user->avatar) ? asset('upload/user_images/' . $user->avatar) : asset('upload/avatar.png') }}"
