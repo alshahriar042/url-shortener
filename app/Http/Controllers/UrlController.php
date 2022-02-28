@@ -89,6 +89,7 @@ class UrlController extends Controller
                     'visit_count' => $visitor_count
                 ]);
 
+              //300 sec = 5 min
             } elseif ($diff > 60) {
                 $visitor_count = 1;
                 Visit::where('id', $ipexists->id)
