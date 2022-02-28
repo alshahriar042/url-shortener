@@ -97,7 +97,7 @@ class UrlController extends Controller
                         'visit_count' => $visitor_count
                     ]);
             }
-             elseif($find_url->ip_hit_number > $visit->visit_count) {
+             elseif($find_url->ip_hit_number < $visit->visit_count) {
                 Visit::where('id', $ipexists->id)
                     ->update([
                         'visit_count' => $visitor_count
@@ -111,9 +111,9 @@ class UrlController extends Controller
         $visit        = Visit::where('url_id', $find_url->id)->first();
         $date         = Carbon::parse($visit->last_visit_time);
         $now          = Carbon::now();
-        $diff         = $date->diffInMinutes($now);
+        $diff         = $date->diffInSeconds($now);
 
-        if (($diff <= 1) && ($find_url->ip_hit_number < $visit->visit_count)) {
+        if (($diff <= 60) && ($find_url->ip_hit_number < $visit->visit_count)) {
             return '/error-message';
 
         } else {
