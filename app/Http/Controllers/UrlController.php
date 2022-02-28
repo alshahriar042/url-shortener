@@ -56,25 +56,21 @@ class UrlController extends Controller
     public function insertinfo($request,$find_url)
     {
         // $ip=$request->ip(); //For live
-        $previous_platform=$request->getSchemeAndHttpHost(); //For live
-        $ip                        = '103.239.147.190'; // Use for localhost
-        $currentUserInfo           = Location::get($ip);
-        $visit['url_id']           = $find_url->id;
-        $visit['visitor_ip']       = $currentUserInfo->ip;
-        $visit['visitor_location'] = $currentUserInfo->cityName;
-        $visit['visitor_long']     = $currentUserInfo->longitude;
-        $visit['visitor_lat']      = $currentUserInfo->latitude;
-        $visit['visitor_device']   = Agent::device();
-        $visit['visitor_os']       = Agent::platform();
-        $visit['last_visit_time']  = Carbon::now();
-        $visit['previous_platform'] =$previous_platform;
-
-        // dd($previous_platform);
+        $ip                         = '103.239.147.190'; // Use for local Testing
+        $currentUserInfo            = Location::get($ip);
+        $visit['url_id']            = $find_url->id;
+        $visit['visitor_ip']        = $currentUserInfo->ip;
+        $visit['visitor_location']  = $currentUserInfo->cityName;
+        $visit['visitor_long']      = $currentUserInfo->longitude;
+        $visit['visitor_lat']       = $currentUserInfo->latitude;
+        $visit['visitor_device']    = Agent::device();
+        $visit['visitor_os']        = Agent::platform();
+        $visit['last_visit_time']   = Carbon::now();
+        $visit['previous_platform'] =$request->getSchemeAndHttpHost();
 
         $ipexists = Visit::where('visitor_ip', $ip)
             ->where('url_id', $find_url->id)
             ->first();
-        // dd($ipexists);
         if ($ipexists == null) {
             Visit::create($visit);
         } else {
