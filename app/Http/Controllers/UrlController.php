@@ -71,6 +71,7 @@ class UrlController extends Controller
         $ipexists = Visit::where('visitor_ip', $ip)
             ->where('url_id', $find_url->id)
             ->first();
+
         if ($ipexists == null) {
             Visit::create($visit);
         } else {
@@ -80,9 +81,11 @@ class UrlController extends Controller
             $date         = Carbon::parse($visit->last_visit_time);
             $now          = Carbon::now();
             $diff         = $date->diffInSeconds($now);
-            //  Log::error($diff);
+              Log::error($diff);
 
             if (($diff <= 60) && ($find_url->ip_hit_number >= $visit->visit_count)) {
+                Log::error(1);
+
                 Visit::where('id', $ipexists->id)
                 ->update([
                     'last_visit_time'  => Carbon::now(),
@@ -90,7 +93,8 @@ class UrlController extends Controller
                 ]);
 
               //300 sec = 5 min
-            } elseif ($diff > 60) {
+            } elseif ($diff > 300) {
+                Log::error(2);
                 $visitor_count = 1;
                 Visit::where('id', $ipexists->id)
                     ->update([
@@ -98,12 +102,18 @@ class UrlController extends Controller
                         'visit_count' => $visitor_count
                     ]);
             }
+            elseif($diff > 60 && $diff < 300 ){
+                Log::error('3 time block');
+                return '/error-message';
+            }
              elseif($find_url->ip_hit_number < $visit->visit_count) {
+                Log::error(4);
                 Visit::where('id', $ipexists->id)
                     ->update([
                         'visit_count' => $visitor_count
                     ]);
             }
+            Log::error($diff);
         }
     }
 
@@ -116,8 +126,12 @@ class UrlController extends Controller
 
         if (($diff <= 60) && ($find_url->ip_hit_number < $visit->visit_count)) {
             return '/error-message';
-
-        } else {
+        }
+        elseif($diff > 60 && $diff < 300 ){
+           Log::error(3);
+            return '/error-message';
+        }
+        else {
             return $find_url->orginal_url;
         }
     }
