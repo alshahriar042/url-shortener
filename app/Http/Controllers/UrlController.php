@@ -128,7 +128,6 @@ class UrlController extends Controller
             return '/error-message';
         }
         elseif($diff > 60 && $diff < 300 ){
-           Log::error(3);
             return '/error-message';
         }
         else {
