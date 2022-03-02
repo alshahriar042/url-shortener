@@ -84,7 +84,7 @@ class UrlController extends Controller
               Log::error($diff);
 
             if (($diff <= 60) && ($find_url->ip_hit_number >= $visit->visit_count)) {
-                Log::error(1);
+                // Log::error(' ,1st block');
 
                 Visit::where('id', $ipexists->id)
                 ->update([
@@ -94,8 +94,8 @@ class UrlController extends Controller
 
               //300 sec = 5 min
             } elseif ($diff > 300) {
-                Log::error(2);
-                $visitor_count = 1;
+                // Log::error(2);
+                $visitor_count = 0;
                 Visit::where('id', $ipexists->id)
                     ->update([
                         'last_visit_time'  => Carbon::now(),
@@ -103,17 +103,17 @@ class UrlController extends Controller
                     ]);
             }
             elseif($diff > 60 && $diff < 300 ){
-                Log::error('3 time block');
+                // Log::error('3 time block');
                 return '/error-message';
             }
              elseif($find_url->ip_hit_number < $visit->visit_count) {
-                Log::error(4);
+                // Log::error('4 ,count visit');
                 Visit::where('id', $ipexists->id)
                     ->update([
                         'visit_count' => $visitor_count
                     ]);
             }
-            Log::error($diff);
+            // Log::error($diff);
         }
     }
 
