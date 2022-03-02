@@ -22,7 +22,6 @@ class UrlController extends Controller
 
     public function generateUniqueCode()
     {
-
         do {
             $code = Str::random(6);
         } while (Url::where("shortened_url", "=", $code)->first());
@@ -57,7 +56,7 @@ class UrlController extends Controller
     {
 
         //localhost Ip details Not working in local..Use Static Ip for local
-        $ip                         = $request->ip() == "127.0.0.1" ? "103.239.147.190" : ($request->ip()); // Use for local Testing
+        $ip                         = $request->ip() == "127.0.0.1" ? "103.239.147.190" : ($request->ip());
         $currentUserInfo            = Location::get($ip);
         $visit['url_id']            = $find_url->id;
         $visit['visitor_ip']        = $currentUserInfo->ip;

@@ -7,17 +7,12 @@ use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    //
     public function index(){
         $reports= Url::with(['user','visits'])->get();
-        // dd($reports);
-
         return view('report',compact('reports'));
     }
 
     public function error(){
-        // dd($reports);
-
         return view('error-message');
     }
 }
