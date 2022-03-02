@@ -55,8 +55,9 @@ class UrlController extends Controller
 
     public function insertinfo($request,$find_url)
     {
-        // $ip=$request->ip(); //For live
-        $ip                         = '103.239.147.190'; // Use for local Testing
+
+        //localhost Ip details Not working in local..Use Static Ip for local
+        $ip                         = $request->ip() == "127.0.0.1" ? "103.239.147.190" : ($request->ip()); // Use for local Testing
         $currentUserInfo            = Location::get($ip);
         $visit['url_id']            = $find_url->id;
         $visit['visitor_ip']        = $currentUserInfo->ip;
@@ -84,8 +85,6 @@ class UrlController extends Controller
               Log::error($diff);
 
             if (($diff <= 60) && ($find_url->ip_hit_number >= $visit->visit_count)) {
-                // Log::error(' ,1st block');
-
                 Visit::where('id', $ipexists->id)
                 ->update([
                     'last_visit_time'  => Carbon::now(),
@@ -94,7 +93,6 @@ class UrlController extends Controller
 
               //300 sec = 5 min
             } elseif ($diff > 300) {
-                // Log::error(2);
                 $visitor_count = 0;
                 Visit::where('id', $ipexists->id)
                     ->update([
@@ -103,17 +101,14 @@ class UrlController extends Controller
                     ]);
             }
             elseif($diff > 60 && $diff < 300 ){
-                // Log::error('3 time block');
                 return '/error-message';
             }
              elseif($find_url->ip_hit_number < $visit->visit_count) {
-                // Log::error('4 ,count visit');
                 Visit::where('id', $ipexists->id)
                     ->update([
                         'visit_count' => $visitor_count
                     ]);
             }
-            // Log::error($diff);
         }
     }
 
